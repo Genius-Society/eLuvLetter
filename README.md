@@ -16,6 +16,7 @@ The heartbeat animation indicates that the BGM is loading, please be patient and
 3. Customize `./font/content.json` in your duplicated space online by the [eLuvLetter JSON Generator](https://huggingface.co/spaces/Genius-Society/eluvletter_configurator);
 4. Commit the changes to your duplicated space;
 5. Click `Embed this Space` and copy the `direct URL` of your duplicated space.
+<img width="1230" height="295" alt="Snipaste_2025-07-23_09-53-54" src="https://github.com/user-attachments/assets/63a85723-5afa-485b-ace2-205f86dd6d3a" />
 
 ## GitHub solution
 [HuggingFace solution](#huggingface-solution) is recommended!
