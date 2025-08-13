@@ -1,6 +1,6 @@
 # eLuvLetter tutorial
 [![license](https://img.shields.io/github/license/Genius-Society/eLuvLetter.svg)](https://github.com/Genius-Society/eLuvLetter/blob/main/LICENSE)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/154babf2-94f7-4abf-a333-6f3e150dcf09/deploy-status)](https://eluvletter.netlify.app)
+[![cloudflare](https://img.shields.io/badge/cloudflare-e--luvletter-f6821f.svg)](https://e-luvletter.pages.dev)
 [![hf](https://img.shields.io/badge/huggingface-eluvletter-ffd21e.svg)](https://huggingface.co/collections/Genius-Society/eluvletter-687f8f68ed3333e5e2376832)
 [![ms](https://img.shields.io/badge/modelscope-eluvletter-624aff.svg)](https://www.modelscope.cn/collections/eLuvLetter-e7a8c747ba814b)
 [![cnblogs](https://img.shields.io/badge/cnblogs-16617269-075db3.svg)](https://www.cnblogs.com/Genius-Society/p/16617269.html)
@@ -8,7 +8,7 @@
 
 The heartbeat animation indicates that the BGM is loading, please be patient and wait util the envelope appears.
 
-[![](https://i2.hdslb.com/bfs/archive/15697cf5676c81270f7ba1c536d9834b8313a5a2.png)](https://eluvletter.netlify.app)
+[![](https://i2.hdslb.com/bfs/archive/15697cf5676c81270f7ba1c536d9834b8313a5a2.png)](https://e-luvletter.pages.dev)
 
 ## HuggingFace solution
 1. Register a [HuggingFace](https://huggingface.co) account;
