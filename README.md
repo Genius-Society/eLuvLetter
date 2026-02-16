@@ -2,7 +2,7 @@
 [![license](https://img.shields.io/github/license/Genius-Society/eLuvLetter.svg)](https://github.com/Genius-Society/eLuvLetter/blob/main/LICENSE)
 [![cloudflare](https://img.shields.io/badge/cloudflare-e--luvletter-f6821f.svg)](https://e-luvletter.pages.dev)
 [![hf](https://img.shields.io/badge/huggingface-eluvletter-ffd21e.svg)](https://huggingface.co/collections/Genius-Society/eluvletter-687f8f68ed3333e5e2376832)
-[![ms](https://img.shields.io/badge/modelscope-eluvletter-624aff.svg)](https://www.modelscope.cn/collections/eLuvLetter-e7a8c747ba814b)
+[![ms](https://img.shields.io/badge/modelscope-eluvletter-624aff.svg)](https://www.modelscope.cn/collections/Genius-Society/eLuvLetter)
 [![cnblogs](https://img.shields.io/badge/cnblogs-16617269-075db3.svg)](https://www.cnblogs.com/Genius-Society/p/16617269.html)
 [![bili](https://img.shields.io/badge/bilibili-BV1hergYREEG-fc8bab.svg)](https://www.bilibili.com/video/BV1hergYREEG)
 
