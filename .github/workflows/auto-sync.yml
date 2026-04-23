@@ -28,7 +28,7 @@ jobs:
         run: |
           git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/Genius-Society/eluvletter_configurator ../hf_repo
           mv -f ./.github/restart.py ../
-          rm -rf ./*.py ./*.txt ./LICENSE ./README.md ./.github ./.git ./.gitignore ./.gitattributes
+          rm -rf ./*.txt ./LICENSE ./README.md ./.github ./.git ./.gitignore ./.gitattributes
           cp -rf ../hf_repo/.git ../hf_repo/README.md ./
           if [ -n "$(git status --porcelain)" ]; then
             echo "Files are different, committing changes..."
