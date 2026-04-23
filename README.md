@@ -1,5 +1,5 @@
 # eLuvLetter tutorial
-[![github-action](https://github.com/Genius-Society/eLuvLetter/actions/workflows/auto-sync.yml/badge.svg)](https://github.com/Genius-Society/eLuvLetter/actions/workflows/auto-sync.yml)
+[![github-action](https://github.com/Genius-Society/eLuvLetter/actions/workflows/auto-sync.yml/badge.svg)](https://github.com/Genius-Society/eLuvLetter/actions/workflows/auto-sync.yml?query=branch%3Amain)
 [![license](https://img.shields.io/github/license/Genius-Society/eLuvLetter.svg)](./LICENSE)
 [![cloudflare](https://img.shields.io/badge/cloudflare-e--luvletter-f6821f.svg)](https://e-luvletter.pages.dev)
 [![hf](https://img.shields.io/badge/huggingface-eluvletter-ffd21e.svg)](https://huggingface.co/collections/Genius-Society/eluvletter-687f8f68ed3333e5e2376832)
