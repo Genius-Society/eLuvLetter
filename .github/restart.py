@@ -6,7 +6,7 @@ from modelscope import HubApi
 
 def restart_studio(
     token: str,
-    repo="Genius-Society/eLuvLetter",
+    repo="Genius-Society/eluvletter_configurator",
     endpoint="https://www.modelscope.cn",
     hold=5,
 ):

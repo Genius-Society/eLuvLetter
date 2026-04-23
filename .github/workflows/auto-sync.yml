@@ -3,7 +3,7 @@ name: auto-sync
 on:
   push:
     branches:
-      - main
+      - app
   workflow_dispatch:
     # 允许手动触发
 
@@ -19,17 +19,38 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: 同步至 ModelScope
+      # Step 2: 同步至 HuggingFace
+      - name: Sync Files to HuggingFace
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GIT_NAME: ${{ secrets.GIT_NAME }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+        run: |
+          git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/Genius-Society/eluvletter_configurator ../hf_repo
+          mv -f ./.github/restart.py ../
+          rm -rf ./*.py ./*.txt ./LICENSE ./README.md ./.github ./.git ./.gitignore ./.gitattributes
+          cp -rf ../hf_repo/.git ../hf_repo/README.md ./
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Files are different, committing changes..."
+            git config --global user.name "$GIT_NAME"
+            git config --global user.email "$GIT_EMAIL"
+            git add .
+            git commit -m "Auto sync at $(date +%Y-%m-%d)"
+            git push
+          else
+            echo "Files are the same, no changes."
+          fi
+
+      # Step 3: 同步至 ModelScope
       - name: Sync Files to ModelScope
         env:
           MS_TOKEN: ${{ secrets.MS_TOKEN }}
           GIT_NAME: ${{ secrets.GIT_NAME }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
         run: |
-          git clone https://oauth2:$MS_TOKEN@www.modelscope.cn/studios/Genius-Society/eLuvLetter.git ../ms_repo
-          mv -f ./.github/restart.py ../
-          rm -rf ./*.py ./*.txt ./LICENSE ./README.md ./.github ./.git ./.gitignore ./.gitattributes
-          cp -rf ../ms_repo/.git ./
+          git clone https://oauth2:$MS_TOKEN@www.modelscope.cn/studios/Genius-Society/eluvletter_configurator.git ../ms_repo
+          rm -rf ./README.md ./.git
+          cp -rf ../ms_repo/.git ../ms_repo/example.mp3 ./
           if [ -n "$(git status --porcelain)" ]; then
             echo "Files are different, committing changes..."
             git config --global user.name "$GIT_NAME"
@@ -39,28 +60,6 @@ jobs:
             git push
             pip install modelscope
             python ../restart.py --token $MS_TOKEN
-          else
-            echo "Files are the same, no changes."
-          fi
-
-      # Step 3: 同步至 HuggingFace
-      - name: Sync Files to HuggingFace
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          GIT_NAME: ${{ secrets.GIT_NAME }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-        run: |
-          git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/Genius-Society/eluvletter ../hf_repo
-          rm -rf ./*.py ./*.txt ./LICENSE ./README.md ./.github ./.git ./.gitignore ./.gitattributes
-          cp -rf ../hf_repo/.git ./
-          cp -rf ../hf_repo/README.md ./
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "Files are different, committing changes..."
-            git config --global user.name "$GIT_NAME"
-            git config --global user.email "$GIT_EMAIL"
-            git add .
-            git commit -m "Auto sync at $(date +%Y-%m-%d)"
-            git push
           else
             echo "Files are the same, no changes."
           fi
