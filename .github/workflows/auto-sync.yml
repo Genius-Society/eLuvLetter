@@ -77,11 +77,11 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GIT_NAME: ${{ secrets.GIT_NAME }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+          MD_URL: ${{ env.MD_URL }}
         run: |
           GIT_LFS_SKIP_SMUDGE=1 git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/Genius-Society/eluvletter_configurator ./hf_repo
           cd ./hf_repo
-          URL="https://huggingface.co/spaces/gradio/multiple-api-name-test/blob/main/README.md"
-          LATEST_VERSION=$(curl -s "$URL" | tr -d '\n' | grep -oP '(?<=<code>).*?(?=</code>)')
+          LATEST_VERSION=$(curl -s "$MD_URL" | tr -d '\n' | grep -oP '(?<=<code>).*?(?=</code>)')
           if [ -n "$LATEST_VERSION" ]; then
             sed -i "s/^\(sdk_version: \)[0-9.]*/\1$LATEST_VERSION/" README.md
             if [ -n "$(git status --porcelain)" ]; then
