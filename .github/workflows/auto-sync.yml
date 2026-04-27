@@ -72,7 +72,7 @@ jobs:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      - name: Sync Files to HuggingFace
+      - name: Check HuggingFace SDK Update
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GIT_NAME: ${{ secrets.GIT_NAME }}
