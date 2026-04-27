@@ -77,13 +77,13 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GIT_NAME: ${{ secrets.GIT_NAME }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-          MD_URL: ${{ env.MD_URL }}
+          MD_URL: ${{ vars.MD_URL }}
         run: |
           GIT_LFS_SKIP_SMUDGE=1 git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/Genius-Society/eluvletter_configurator ./hf_repo
           cd ./hf_repo
-          LATEST_VERSION=$(curl -s "$MD_URL" | tr -d '\n' | grep -oP '(?<=<code>).*?(?=</code>)')
-          if [ -n "$LATEST_VERSION" ]; then
-            sed -i "s/^\(sdk_version: \)[0-9.]*/\1$LATEST_VERSION/" README.md
+          LATEST_VER=$(curl -s "$MD_URL" | tr -d '\n' | grep -oP '(?<=<code>).*?(?=</code>)')
+          if [ -n "$LATEST_VER" ]; then
+            sed -i "s/^\(sdk_version: \)[0-9.]*/\1$LATEST_VER/" README.md
             if [ -n "$(git status --porcelain)" ]; then
               echo "Files are different, committing changes..."
               git config --global user.name "$GIT_NAME"
