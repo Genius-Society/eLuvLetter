@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - app
+
+  schedule:
+    - cron: "0 19 * * *" # 每天 UTC 时间 19:00 (北京时间 3:00~4:15) 触发一次
+
   workflow_dispatch:
     # 允许手动触发
 
@@ -11,9 +15,9 @@ permissions:
   contents: write
 
 jobs:
-  sync-file:
+  job-on-push:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-
     steps:
       # Step 1: 检出当前仓库代码
       - name: Checkout repository
@@ -35,7 +39,7 @@ jobs:
             git config --global user.name "$GIT_NAME"
             git config --global user.email "$GIT_EMAIL"
             git add .
-            git commit -m "Auto sync at $(date +%Y-%m-%d)"
+            git commit -m "Auto sync at $(date '+%Y-%m-%d %H:%M:%S')"
             git push
           else
             echo "Files are the same, no changes."
@@ -56,10 +60,40 @@ jobs:
             git config --global user.name "$GIT_NAME"
             git config --global user.email "$GIT_EMAIL"
             git add .
-            git commit -m "Auto sync at $(date +%Y-%m-%d)"
+            git commit -m "Auto sync at $(date '+%Y-%m-%d %H:%M:%S')"
             git push
             pip install modelscope
             python ../restart.py --token $MS_TOKEN
           else
             echo "Files are the same, no changes."
+          fi
+
+  job-on-schedule:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync Files to HuggingFace
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GIT_NAME: ${{ secrets.GIT_NAME }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+        run: |
+          GIT_LFS_SKIP_SMUDGE=1 git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/Genius-Society/eluvletter_configurator ./hf_repo
+          cd ./hf_repo
+          URL="https://huggingface.co/spaces/gradio/multiple-api-name-test/blob/main/README.md"
+          LATEST_VERSION=$(curl -s "$URL" | tr -d '\n' | grep -oP '(?<=<code>).*?(?=</code>)')
+          if [ -n "$LATEST_VERSION" ]; then
+            sed -i "s/^\(sdk_version: \)[0-9.]*/\1$LATEST_VERSION/" README.md
+            if [ -n "$(git status --porcelain)" ]; then
+              echo "Files are different, committing changes..."
+              git config --global user.name "$GIT_NAME"
+              git config --global user.email "$GIT_EMAIL"
+              git add .
+              git commit -m "Update SDK at $(date '+%Y-%m-%d %H:%M:%S')"
+              git push
+            else
+              echo "Files are the same, no changes."
+            fi
+          else
+            echo "Failed to obtain latest sdk version."
           fi
