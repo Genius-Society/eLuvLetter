@@ -23,38 +23,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: 同步至 HuggingFace
-      - name: Sync Files to HuggingFace
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          GIT_NAME: ${{ secrets.GIT_NAME }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-        run: |
-          git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/Genius-Society/eluvletter_configurator ../hf_repo
-          mv -f ./.github/restart.py ../
-          rm -rf ./*.txt ./LICENSE ./README.md ./.github ./.git ./.gitignore ./.gitattributes
-          cp -rf ../hf_repo/.git ../hf_repo/README.md ./
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "Files are different, committing changes..."
-            git config --global user.name "$GIT_NAME"
-            git config --global user.email "$GIT_EMAIL"
-            git add .
-            git commit -m "Auto sync at $(date '+%Y-%m-%d %H:%M:%S')"
-            git push
-          else
-            echo "Files are the same, no changes."
-          fi
-
-      # Step 3: 同步至 ModelScope
+      # Step 2: 同步至 ModelScope
       - name: Sync Files to ModelScope
         env:
           MS_TOKEN: ${{ secrets.MS_TOKEN }}
           GIT_NAME: ${{ secrets.GIT_NAME }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
         run: |
+          mv -f ./.github/restart.py ../
           git clone https://oauth2:$MS_TOKEN@www.modelscope.cn/studios/Genius-Society/eluvletter_configurator.git ../ms_repo
-          rm -rf ./README.md ./.git
-          cp -rf ../ms_repo/.git ../ms_repo/example.mp3 ./
+          rm -rf ./.git* ./LICENSE ./README.md
+          cp -rf ../ms_repo/example.mp3 ../ms_repo/.git ./
           if [ -n "$(git status --porcelain)" ]; then
             echo "Files are different, committing changes..."
             git config --global user.name "$GIT_NAME"
@@ -68,32 +47,25 @@ jobs:
             echo "Files are the same, no changes."
           fi
 
-  job-on-schedule:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check HuggingFace SDK Update
+      # Step 3: 同步至 HuggingFace
+      - name: Sync Files to HuggingFace
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GIT_NAME: ${{ secrets.GIT_NAME }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-          MD_URL: ${{ vars.MD_URL }}
         run: |
-          GIT_LFS_SKIP_SMUDGE=1 git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/Genius-Society/eluvletter_configurator ./hf_repo
-          cd ./hf_repo
-          LATEST_VER=$(curl -s "$MD_URL" | tr -d '\n' | grep -oP '(?<=<code>).*?(?=</code>)')
-          if [ -n "$LATEST_VER" ]; then
-            sed -i "s/^\(sdk_version: \)[0-9.]*/\1$LATEST_VER/" README.md
-            if [ -n "$(git status --porcelain)" ]; then
-              echo "Files are different, committing changes..."
-              git config --global user.name "$GIT_NAME"
-              git config --global user.email "$GIT_EMAIL"
-              git add .
-              git commit -m "Update SDK at $(date '+%Y-%m-%d %H:%M:%S')"
-              git push
-            else
-              echo "Files are the same, no changes."
-            fi
+          git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/Genius-Society/gradio_tools ../hf_repo
+          rm -rf ./.git
+          mkdir -p ../hf_repo/cfg_eluvletter
+          cp -rf ./*.py ../hf_repo/cfg_eluvletter
+          cd ../hf_repo
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Files are different, committing changes..."
+            git config --global user.name "$GIT_NAME"
+            git config --global user.email "$GIT_EMAIL"
+            git add .
+            git commit -m "Auto sync at $(date '+%Y-%m-%d %H:%M:%S')"
+            git push
           else
-            echo "Failed to obtain latest sdk version."
+            echo "Files are the same, no changes."
           fi
