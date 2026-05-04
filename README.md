@@ -5,6 +5,7 @@
 [![hf](https://img.shields.io/badge/huggingface-eluvletter-ffd21e.svg)](https://huggingface.co/spaces/Genius-Society/eluvletter)
 [![ms](https://img.shields.io/badge/modelscope-eluvletter-624aff.svg)](https://www.modelscope.cn/collections/Genius-Society/eLuvLetter)
 [![cnblogs](https://img.shields.io/badge/cnblogs-16617269-075db3.svg)](https://www.cnblogs.com/Genius-Society/p/16617269.html)
+[![ytb](https://img.shields.io/badge/youtube-QFJfjYu36jc-ff0033.svg)](https://www.youtube.com/watch?v=QFJfjYu36jc)
 [![bili](https://img.shields.io/badge/bilibili-BV1hergYREEG-fc8bab.svg)](https://www.bilibili.com/video/BV1hergYREEG)
 
 表白信封自定义配置工具是一个专为个性化定制表白信封而设计的应用程序，它允许用户根据自己的喜好和需求，对 eLuvLetter 仓库中的 content.json 文件进行编辑和调整。通过这个工具，用户可以选择个性化的文本信息和背景音乐，从而创造出独一无二的表白信封。无论是浪漫的情书、特别的礼物包装，还是具有纪念意义的信件，这个工具都能帮助用户表达他们的情感和心意。
