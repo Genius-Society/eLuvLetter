@@ -24,6 +24,7 @@ ZH2EN = {
     "表白信封自定义配置工具": "eLuvLetter JSON Generator",
     "生成": "Generate",
     "清空": "Clear",
+    "eLuvLetter 视频": "eLuvLetter video",
     """本工具可为你生成自定义版 `content.json` 用于替换你复刻得到的 `eLuvLetter` 仓库内的 `font/content.json`, 其中的背景音乐控件用于上传拆信封时所播放的音频，建议不要太大，请确保音频上传完整后再点击生成按钮。""": """This tool can generate your customized `content.json` to replace the `font/content.json` in your forked `eLuvLetter` repository, in which the BGM widget is used to upload the audio played when opening the envelope, it is recommended not to be too large, please make sure the audio is completely uploaded before clicking the Generate button.""",
 }
 
@@ -110,6 +111,13 @@ def infer(
 
 def main():
     with gr.Blocks() as demo:
+        with gr.Accordion(label=_L("eLuvLetter 视频"), open=False):
+            gr.HTML(
+                """<iframe width="100%" src="https://www.youtube.com/embed/QFJfjYu36jc?si=8D0Gz4WT-ySOq0gn&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" style="aspect-ratio: 16 / 9;" allowfullscreen></iframe>"""
+                if EN_US
+                else """<iframe src="//player.bilibili.com/player.html?bvid=BV1hergYREEG&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" style="aspect-ratio: 16 / 9;"></iframe>"""
+            )
+
         gr.Interface(
             fn=infer,
             inputs=[
@@ -169,12 +177,6 @@ def main():
             description=_L(
                 """本工具可为你生成自定义版 `content.json` 用于替换你复刻得到的 `eLuvLetter` 仓库内的 `font/content.json`, 其中的背景音乐控件用于上传拆信封时所播放的音频，建议不要太大，请确保音频上传完整后再点击生成按钮。"""
             ),
-        )
-
-        gr.HTML(
-            """<iframe width="100%" src="https://www.youtube.com/embed/QFJfjYu36jc?si=8D0Gz4WT-ySOq0gn&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" style="aspect-ratio: 16 / 9;" allowfullscreen></iframe>"""
-            if EN_US
-            else """<iframe src="//player.bilibili.com/player.html?bvid=BV1hergYREEG&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" style="aspect-ratio: 16 / 9;"></iframe>"""
         )
 
     return demo
