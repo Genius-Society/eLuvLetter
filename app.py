@@ -106,7 +106,7 @@ def infer(
     except Exception as e:
         status = f"{e}"
 
-    return status, out_json, f"{content}"
+    return status, out_json, json.dumps(content, ensure_ascii=False, indent=4)
 
 
 def main():
