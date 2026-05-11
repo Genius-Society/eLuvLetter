@@ -35,7 +35,7 @@ jobs:
             git config --global user.name "$GIT_NAME"
             git config --global user.email "$GIT_EMAIL"
             git add .
-            git commit -m "Auto sync at $(date +%Y-%m-%d)"
+            git commit -m "Auto sync at $(date '+%Y-%m-%d %H:%M:%S')"
             git push
           else
             echo "Files are the same, no changes."
@@ -56,7 +56,7 @@ jobs:
             git config --global user.name "$GIT_NAME"
             git config --global user.email "$GIT_EMAIL"
             git add .
-            git commit -m "Auto sync at $(date +%Y-%m-%d)"
+            git commit -m "Auto sync at $(date '+%Y-%m-%d %H:%M:%S')"
             git push
             pip install modelscope
             python ../restart.py --token $MS_TOKEN
