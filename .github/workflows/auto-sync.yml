@@ -55,7 +55,7 @@ jobs:
             git add .
             git commit -m "Auto sync at $(date '+%Y-%m-%d %H:%M:%S')"
             git push
-            pip install python ../restart.py --
+            pip install modelscope==1.37.1
             python ../restart.py --token $MS_TOKEN
           else
             echo "Files are the same, no changes."
