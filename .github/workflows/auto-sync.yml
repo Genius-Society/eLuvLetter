@@ -5,14 +5,10 @@ on:
     branches:
       - app
 
-  schedule:
-    - cron: "0 19 * * *" # 每天 UTC 时间 19:00 (北京时间 3:00~4:15) 触发一次
-
-  workflow_dispatch:
-    # 允许手动触发
+  workflow_dispatch: # 允许手动触发
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   job-on-push:
@@ -21,8 +17,7 @@ jobs:
     steps:
       # Step 1: 检出当前仓库代码
       - name: Checkout repository
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@v5
       # Step 2: 同步至 ModelScope
       - name: Sync Files to ModelScope
         env:
@@ -41,7 +36,7 @@ jobs:
             git add .
             git commit -m "Auto sync at $(date '+%Y-%m-%d %H:%M:%S')"
             git push
-            pip install modelscope
+            pip install modelscope==1.37.1
             python ../restart.py --token $MS_TOKEN
           else
             echo "Files are the same, no changes."
